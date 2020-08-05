@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <section style="padding: 100px 0">
+        <div class="container">
+            <div class="row">
+                <sidebar />
+                <site-content />
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/Sidebar.vue';
+import SiteContent from './components/SiteContent.vue';
+
+import { AIRLINES } from './store/types';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    name: 'App',
+    components: {
+        Sidebar,
+        SiteContent
+    },
+    mounted() {
+        this.$store.dispatch(AIRLINES.SET);
+    },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
