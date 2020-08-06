@@ -1,0 +1,134 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: local('Open Sans'), local('OpenSans'), url('../fonts/opensans/opensans.woff2') format('woff2'), url('../fonts/opensans/opensans.woff') format('woff'), url('../fonts/opensans/opensans.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+html, body {
+	width: 100%;
+	min-height: 100%;
+	background-color: #D7D7D7;
+	font-family: Open Sans;
+	color: #202123;
+}
+
+button {
+	border: none;
+	outline: none !important;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.items-center {
+	align-items: center;
+}
+
+.items-end {
+	align-items: flex-end;
+}
+
+.items-start {
+	align-items: flex-start;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-start {
+	justify-content: flex-start;
+}
+
+.justify-end {
+	justify-content: flex-end;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.flex-1-1 {
+	flex: 1 1 auto;
+}
+
+.rounded {
+	border-radius: 4px;
+}
+
+.dashed-link {
+	color: #7284E4;
+	cursor: pointer;
+	margin-bottom: 0;
+	font-size: 12px;
+	border-bottom: 1px dashed #7284E4;
+	text-decoration: none !important;
+	display: inline-block;
+}
+
+.dashed-link:hover {
+	color: #444f8b;
+}
+
+.main-btn {
+	border-radius: 4px;
+	background-color: #55BB06;
+	font-size: 18px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	padding: 6px 12px;
+	transition: 0.3s;
+}
+
+.main-btn:hover {
+	box-shadow: 0 5px 20px 0 rgba(85,187,6,.4);
+}
+
+.purple-btn {
+	border-radius: 2px;
+	font-size: 10px;
+	font-weight: bold;
+	color: #5763B3;
+	padding: 3px 5px;
+	background-color: #EAF0FA;
+	transition: 0.3s;
+}
+
+.purple-btn:hover {
+	background-color: #c3cfe6;
+}
+
+.gray-p {
+	color: #707276;
+	font-size: 12px;
+	line-height: 1;
+	margin-bottom: 0;
+}
+
+.black-p {
+	color: #202123;
+	font-size: 12px;
+	line-height: 1;
+	margin-bottom: 0;
+}
+
+.orange-p {
+	color: #FF9900;
+	font-size: 1em;
+	line-height: 1;
+	margin-bottom: 0;
+}
+
+.green-p {
+	color: #55BB06;
+	font-size: 1em;
+	line-height: 1;
+	margin-bottom: 0;
+}
