@@ -1,24 +1,17 @@
-# aviata-task
+# Тестовое задание Aviata.kz
 
-## Project setup
-```
-npm install
-```
+Реализация страницы результата поиска билетов на VueJs
 
-### Compiles and hot-reloads for development
+Страницу можно посмотреть здесь (https://kirillsolovyev.github.io/aviata-test-task/)
+
+Верстка адаптирована под мобильные устройтства (до 320px)
+
+Для запуска локально
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+Для запуска тестов
 ```
-npm run build
+npm run test
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
