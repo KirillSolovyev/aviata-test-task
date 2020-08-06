@@ -1,31 +1,55 @@
 <template>
-	<div class="sidebar flex flex-column col-lg-3">
+	<div class="sidebar flex flex-column col-lg-3" :class="{ 'sidebar_active': sidebarIsOpen }">
 		<div class="sidebar__header_mobile flex justify-between items-center">
-			<button class="sidebar-btn">Закрыть</button>
+			<button class="sidebar-btn" @click="closeSidebar">Закрыть</button>
 			<p class="filter-block__title">Фильтры</p>
-			<button class="sidebar-btn">Сбросить</button>
+			<button class="sidebar-btn" @click="clearFilter">Сбросить</button>
 		</div>
 		<div class="sidebar__inner flex-1-1">
-			<filter-block :title="'Опции тарифа'" class="mb-3">
+			<filter-block 
+				class="mb-3" 
+				:title="'Опции тарифа'" 
+				:hasSelect="filter.options.length > 0"
+				@filter:clear="clearOptionsFilter"
+			>
 				<label class="main-checkbox">
-					<input type="checkbox"/>
-					<span>Air Astana</span>
+					<input 
+						type="checkbox" 
+						@change="setOption('onlyDirect')"
+						:checked="hasOption('onlyDirect')"
+					/>
+					<span>Только прямые</span>
 				</label>
 				<label class="main-checkbox">
-					<input type="checkbox"/>
-					<span>Air Astana</span>
+					<input 
+						type="checkbox" 
+						@change="setOption('withBaggage')"
+						:checked="hasOption('withBaggage')"
+					/>
+					<span>Только с багажом</span>
+				</label>
+				<label class="main-checkbox">
+					<input 
+						type="checkbox" 
+						@change="setOption('withRefund')"
+						:checked="hasOption('withRefund')"
+					/>
+					<span>Только возвратные</span>
 				</label>
 			</filter-block>
 			<filter-block :title="'Авиакомпании'">
 				<label class="main-checkbox">
-					<input type="checkbox" checked="checked" />
+					<input 
+						type="checkbox" 
+						:checked="!filter.companies.length"
+						@change="clearFilter"
+					/>
 					<span>Все</span>
 				</label>
 				<vue-custom-scrollbar  v-if="airlines" class="companies-scroll" :settings="scrollSettings">
 					<label v-for="(airline, airlineId) in airlines" :key="airlineId" class="main-checkbox">
 						<input 
-							type="checkbox" 
-							:value="airlineId" 
+							type="checkbox"  
 							:checked="hasAirline(airlineId)"
 							@change="selectAirline(airlineId)"
 							/>
@@ -33,7 +57,7 @@
 					</label>
 				</vue-custom-scrollbar>
 			</filter-block>
-			<p class="dashed-link dashed-link_sidebar" @click="clearAirlinesFilter">Сбросить все фильтры</p>
+			<p class="dashed-link dashed-link_sidebar" @click="clearFilter">Сбросить все фильтры</p>
 		</div>
 		<fixed-bottom-menu :btnText="'Закрыть'" @btn:clicked="closeSidebar"/>
 	</div>
@@ -54,6 +78,9 @@
 			FilterBlock,
 			FixedBottomMenu
 		},
+		props: {
+			sidebarIsOpen: Boolean
+		},
 		data() {
 			return {
 				scrollSettings: {
@@ -63,25 +90,45 @@
 			};
 		},
 		methods: {
-			closeSidebar() {},
+			closeSidebar() {
+				this.$emit('sidebar:toggle');
+			},
 
 			selectAirline(airlineId) {
-				const hasAirline = this.hasAirline(airlineId);
-				if(hasAirline) {
-					console.log(`Deleted ${airlineId}`);
+				if(this.hasAirline(airlineId)) {
 					this.$store.dispatch(FILTER.COMPANIES.DELETE, airlineId);
 				} else {
-					console.log(`Added ${airlineId}`);
 					this.$store.dispatch(FILTER.COMPANIES.ADD, airlineId);
 				}
 			},
 
-			clearAirlinesFilter() {
+			hasAirline(airlineId) {
+				return this.filter.companies.filter(airline => airline === airlineId)[0] !== undefined;
+			},
+
+			clearFilter() {
 				this.$store.dispatch(FILTER.COMPANIES.CLEAR);
+				this.$store.dispatch(FILTER.OPTIONS.CLEAR);
+			},
+
+			setOption(option) {
+				if(this.hasOption(option)) {
+					this.$store.dispatch(FILTER.OPTIONS.DELETE, option);
+				} else {
+					this.$store.dispatch(FILTER.OPTIONS.ADD, option);
+				}
+			},
+
+			hasOption(option) {
+				return this.filter.options.filter(opt => opt === option)[0] !== undefined;
+			},
+
+			clearOptionsFilter() {
+				this.$store.dispatch(FILTER.OPTIONS.CLEAR);
 			}
 		},
 		computed: {
-			...mapGetters(['airlines', 'hasAirline', 'filter']),
+			...mapGetters(['airlines', 'filter']),
 		}
 	}
 </script>
@@ -207,6 +254,10 @@
 
 		.clear-filter {
 			display: none;
+		}
+
+		.companies-scroll {
+			max-height: none;
 		}
 	}
 </style>

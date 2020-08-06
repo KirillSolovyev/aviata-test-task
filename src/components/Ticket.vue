@@ -5,56 +5,56 @@
 				<div class="ticket__company-name flex items-center">
 					<img 
 						class="mr-2" 
-						:src="`https://aviata.kz/static/airline-logos/80x80/${this.getCarrier().id}.png`" 
-						:alt="this.getCarrier().name"
+						:src="`https://aviata.kz/static/airline-logos/80x80/${flight.getCarrier().id}.png`" 
+						:alt="flight.getCarrier().name"
 					>
-					{{ this.getCarrier().name }}
+					{{ flight.getCarrier().name }}
 				</div>
 				<div class="ticket__date-block flex items-center">
 					<div class="ticket__date mr-3">
 						<p class="black-p">
-							{{ getFlightDate().dep.date }}
+							{{ flight.getFlightDate().dep.date }}
 						</p>
 						<p class="ticket__time">
-							{{ getFlightDate().dep.time }}
+							{{ flight.getFlightDate().dep.time }}
 						</p>
 					</div>
 					<div class="flight-path">
 						<div class="flight-path__header">
 							<span class="gray-p">
-								{{ getFlightPathCode().origin }}
+								{{ flight.getFlightPathCode().origin }}
 							</span>
 							<span class="black-p">
-								{{ getFlightTime() }}
+								{{ flight.getFlightTime() }}
 							</span>
 							<span class="gray-p">
-								{{ getFlightPathCode().dest }}
+								{{ flight.getFlightPathCode().dest }}
 							</span>
 						</div>
 						<div class="flight-path__path">
 							<span></span>
 						</div>
 						<div class="flight-path__footer">
-							<p v-if="isDirect()" class="green-p">прямой</p>
+							<p v-if="flight.isDirect()" class="green-p">прямой</p>
 							<p v-else class="orange-p">
-								{{ getSegmets() }}
+								{{ flight.getSegmets() }}
 							</p>
 						</div>
 					</div>
 					<div class="ticket__date ml-3">
 						<p class="black-p">
-							{{ getFlightDate().arr.date }}
+							{{ flight.getFlightDate().arr.date }}
 							<!-- <span class="orange-p">+1</span> -->
 						</p>
 						<p class="ticket__time">
-							{{ getFlightDate().arr.time }}
+							{{ flight.getFlightDate().arr.time }}
 						</p>
 					</div>
 				</div>
 			</div>
 			<div class="ticket__more-details flex">
-				<a href="#" class="dashed-link mr-4">Детали перелета</a>
-				<a href="#" class="dashed-link mr-4">Условия тарифа</a>
+				<a href="#" class="dashed-link mr-4" @click.prevent>Детали перелета</a>
+				<a href="#" class="dashed-link mr-4" @click.prevent>Условия тарифа</a>
 				<p v-if="!flight.refundable" class="gray-p">
 					<img style="width: 17px" src="../assets/images/no-refund.svg" alt="Невозвратный">
 					невозвратный
@@ -67,7 +67,7 @@
 			<p class="gray-p ticket__price-note">Цена за всех пассажиров</p>
 			<div class="flex justify-between ticket__baggage items-center">
 				<p class="black-p">
-					{{ getBaggageService() }}
+					{{ flight.getBaggageService() }}
 				</p>
 				<button class="purple-btn">+ Добавить багаж</button>
 			</div>
@@ -76,83 +76,12 @@
 </template>
 
 <script>
+	import { Ticket } from '../models/ticket';
+
 	export default {
 		name: 'ticket',
 		props: {
-			flight: Object
-		},
-		methods: {
-			getCarrier() {
-				const data = this.flight.itineraries[0][0];
-				return {
-					name: data.carrier_name,
-					id: data.carrier
-				};
-			},
-
-			getFlightDate() {
-				const data = this.flight.itineraries[0][0].segments;
-				const dep = data[0].dep_time;
-				const arr = data[data.length - 1].arr_time;
-				return {
-					dep: {
-						date: dep.substring(0, dep.length - 5),
-						time: dep.substring(dep.length - 5)
-					},
-					arr: {
-						date: arr.substring(0, arr.length - 5),
-						time: arr.substring(arr.length - 5)
-					}
-				};
-			},
-
-			getFlightTime() {
-				const data = this.flight.itineraries[0][0].traveltime;
-				return this.fromSecondsToTime(data);
-			},
-
-			fromSecondsToTime(data) {
-				const hours = Math.floor(data / 3600);
-				const minutes = data / 60 - hours * 60;
-				return `${ hours } ч ${ minutes } м`;
-			},
-
-			getFlightPathCode() {
-				const data = this.flight.itineraries[0][0].segments;
-				return {
-					origin: data[0].origin_code,
-					dest: data[data.length - 1].dest_code
-				};
-			},
-
-			isDirect() {
-				const data = this.flight.itineraries[0][0].segments;
-				return data.length < 2;
-			},
-
-			getSegmets() {
-				const data = this.flight.itineraries[0][0].segments;
-				if(data.length < 2) return '';
-				let segmentsStr = 'через ';
-				for(let index in data) {
-					if(index == data.length - 1) break;
-					const segment = data[index];
-					const dep = new Date(segment.dep_time_iso);
-					const arr = new Date(segment.arr_time_iso);
-					const time = this.fromSecondsToTime((arr - dep) / 1000);
-					segmentsStr += `${segment.dest}, ${time} \n`;
-				}
-				return segmentsStr;
-			},
-
-			getBaggageService() {
-				const data = this.flight.services;
-				const baggage = data[Object.keys(data)[0]].value;
-				return baggage;
-			}
-		},
-		mounted() {
-			console.log(this.flight);
+			flight: Ticket
 		}
 	}
 </script>
@@ -294,6 +223,7 @@
 
 		.flight-path {
 			flex: 1 1 auto;
+			width: auto;
 		}
 
 		.ticket__price-block {

@@ -16,8 +16,7 @@ export const store = new Vuex.Store({
 	},
 	getters: {
 		filter: state => state.filter,
-		airlines: state => state.airlines,
-		hasAirline: state => airlineId => state.filter.companies.filter(airline => airline === airlineId)[0] !== undefined,
+		airlines: state => state.airlines
 	},
 	mutations: {
 		[FILTER.OPTIONS.ADD]: (state, payload) => {

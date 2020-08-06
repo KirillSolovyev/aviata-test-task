@@ -2,7 +2,11 @@
 	<div class="filter-block rounded">
 		<p class="filter-block__title flex justify-between items-center">
 			{{ title }}
-			<span v-if="hasSelect" class="clear-filter">
+			<span 
+				v-if="hasSelect" 
+				class="clear-filter" 
+				@click="$emit('filter:clear')"
+			>
 				<button></button>
 				<span class="rounded">Сбросить выбор</span>
 			</span>
@@ -41,7 +45,7 @@
 
 	.clear-filter {
 		width: 25px;
-		height: 25px;
+		height: 20px;
 		position: relative;
 	}
 
