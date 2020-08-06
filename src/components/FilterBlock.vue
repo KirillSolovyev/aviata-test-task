@@ -2,7 +2,7 @@
 	<div class="filter-block rounded">
 		<p class="filter-block__title flex justify-between items-center">
 			{{ title }}
-			<span class="clear-filter">
+			<span v-if="hasSelect" class="clear-filter">
 				<button></button>
 				<span class="rounded">Сбросить выбор</span>
 			</span>
@@ -17,7 +17,11 @@
 	export default {
 		name: 'filter-block',
 		props: {
-			title: String
+			title: String,
+			hasSelect: {
+				default: false,
+				type: Boolean
+			}
 		},
 	}
 </script>

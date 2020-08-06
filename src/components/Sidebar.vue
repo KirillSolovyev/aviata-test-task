@@ -22,13 +22,18 @@
 					<span>Все</span>
 				</label>
 				<vue-custom-scrollbar  v-if="airlines" class="companies-scroll" :settings="scrollSettings">
-					<label v-for="airline in airlines" :key="airline" class="main-checkbox">
-						<input type="checkbox" :value="airline" />
+					<label v-for="(airline, airlineId) in airlines" :key="airlineId" class="main-checkbox">
+						<input 
+							type="checkbox" 
+							:value="airlineId" 
+							:checked="hasAirline(airlineId)"
+							@change="selectAirline(airlineId)"
+							/>
 						<span>{{ airline }}</span>
 					</label>
 				</vue-custom-scrollbar>
 			</filter-block>
-			<p class="dashed-link dashed-link_sidebar">Сбросить все фильтры</p>
+			<p class="dashed-link dashed-link_sidebar" @click="clearAirlinesFilter">Сбросить все фильтры</p>
 		</div>
 		<fixed-bottom-menu :btnText="'Закрыть'" @btn:clicked="closeSidebar"/>
 	</div>
@@ -40,6 +45,7 @@
 
 	import FilterBlock from './FilterBlock';
 	import FixedBottomMenu from './FixedBottomMenu';
+	import { FILTER } from '../store/types';
 
 	export default {
 		name: 'sidebar',
@@ -58,9 +64,24 @@
 		},
 		methods: {
 			closeSidebar() {},
+
+			selectAirline(airlineId) {
+				const hasAirline = this.hasAirline(airlineId);
+				if(hasAirline) {
+					console.log(`Deleted ${airlineId}`);
+					this.$store.dispatch(FILTER.COMPANIES.DELETE, airlineId);
+				} else {
+					console.log(`Added ${airlineId}`);
+					this.$store.dispatch(FILTER.COMPANIES.ADD, airlineId);
+				}
+			},
+
+			clearAirlinesFilter() {
+				this.$store.dispatch(FILTER.COMPANIES.CLEAR);
+			}
 		},
 		computed: {
-			...mapGetters(['airlines']),
+			...mapGetters(['airlines', 'hasAirline', 'filter']),
 		}
 	}
 </script>
