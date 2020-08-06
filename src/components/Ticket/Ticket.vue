@@ -12,22 +12,22 @@
 				</div>
 				<div class="ticket__date-block flex items-center">
 					<div class="ticket__date mr-3">
-						<p class="black-p">
+						<p class="black-p" id="depDate">
 							{{ flight.getFlightDate().dep.date }}
 						</p>
-						<p class="ticket__time">
+						<p class="ticket__time" id="depTime">
 							{{ flight.getFlightDate().dep.time }}
 						</p>
 					</div>
 					<div class="flight-path">
 						<div class="flight-path__header">
-							<span class="gray-p">
+							<span class="gray-p" id="origin">
 								{{ flight.getFlightPathCode().origin }}
 							</span>
-							<span class="black-p">
+							<span class="black-p" id="flightTime">
 								{{ flight.getFlightTime() }}
 							</span>
-							<span class="gray-p">
+							<span class="gray-p" id="dest">
 								{{ flight.getFlightPathCode().dest }}
 							</span>
 						</div>
@@ -35,18 +35,18 @@
 							<span></span>
 						</div>
 						<div class="flight-path__footer">
-							<p v-if="flight.isDirect()" class="green-p">прямой</p>
+							<p v-if="flight.isDirect()" class="green-p" id="isDirect">прямой</p>
 							<p v-else class="orange-p">
 								{{ flight.getSegmets() }}
 							</p>
 						</div>
 					</div>
-					<div class="ticket__date ml-3">
+					<div class="ticket__date ml-3" id="arrDate">
 						<p class="black-p">
 							{{ flight.getFlightDate().arr.date }}
 							<!-- <span class="orange-p">+1</span> -->
 						</p>
-						<p class="ticket__time">
+						<p class="ticket__time" id="arrTime">
 							{{ flight.getFlightDate().arr.time }}
 						</p>
 					</div>
@@ -55,18 +55,18 @@
 			<div class="ticket__more-details flex">
 				<a href="#" class="dashed-link mr-4" @click.prevent>Детали перелета</a>
 				<a href="#" class="dashed-link mr-4" @click.prevent>Условия тарифа</a>
-				<p v-if="!flight.refundable" class="gray-p">
-					<img style="width: 17px" src="../assets/images/no-refund.svg" alt="Невозвратный">
+				<p v-if="!flight.refundable" class="gray-p" id="noRefundBlock">
+					<img style="width: 17px" src="../../assets/images/no-refund.svg" alt="Невозвратный">
 					невозвратный
 				</p>
 			</div>
 		</div>
 		<div class="ticket__price-block flex flex-column justify-between">
-			<p class="ticket__price mb-2">{{ flight.price }}<span>₸</span></p>
+			<p class="ticket__price mb-2" id="flightPrice">{{ flight.price }}<span>₸</span></p>
 			<button class="main-btn">Выбрать</button>
 			<p class="gray-p ticket__price-note">Цена за всех пассажиров</p>
 			<div class="flex justify-between ticket__baggage items-center">
-				<p class="black-p">
+				<p class="black-p" id="flightBaggage">
 					{{ flight.getBaggageService() }}
 				</p>
 				<button class="purple-btn">+ Добавить багаж</button>
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-	import { Ticket } from '../models/ticket';
+	import { Ticket } from '../../models/ticket';
 
 	export default {
 		name: 'ticket',

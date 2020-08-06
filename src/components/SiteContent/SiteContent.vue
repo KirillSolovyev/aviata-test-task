@@ -10,9 +10,9 @@
 <script>
 	import { mapGetters } from 'vuex';
 
-	import Ticket from './Ticket.vue';
-	import { fetchFlights } from '../services/main-service';
-	import { Ticket as TicketModel } from '../models/ticket';
+	import Ticket from '../Ticket/Ticket.vue';
+	import { fetchFlights } from '../../services/main-service';
+	import { Ticket as TicketModel } from '../../models/ticket';
 
 	export default {
 		name: 'site-content',

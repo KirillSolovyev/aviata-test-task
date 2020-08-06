@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import Sidebar from './components/Sidebar.vue';
-import SiteContent from './components/SiteContent.vue';
+import Sidebar from './components/Sidebar/Sidebar.vue';
+import SiteContent from './components/SiteContent/SiteContent.vue';
 
 import { AIRLINES } from './store/types';
-import FixedBottomMenu from './components/FixedBottomMenu';
+import FixedBottomMenu from './components/FixedBottomMenu/FixedBottomMenu';
 
 export default {
     name: 'App',

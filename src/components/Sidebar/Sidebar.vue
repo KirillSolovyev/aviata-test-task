@@ -67,9 +67,9 @@
 	import vueCustomScrollbar from 'vue-custom-scrollbar';
 	import { mapGetters } from 'vuex';
 
-	import FilterBlock from './FilterBlock';
-	import FixedBottomMenu from './FixedBottomMenu';
-	import { FILTER } from '../store/types';
+	import FilterBlock from '../FilterBlock/FilterBlock';
+	import FixedBottomMenu from '../FixedBottomMenu/FixedBottomMenu';
+	import { FILTER } from '../../store/types';
 
 	export default {
 		name: 'sidebar',
@@ -197,11 +197,11 @@
 	.main-checkbox > input:checked + span::before {
 		background-color: #55BB06;
 		border-color: #55BB06;
-		background-image: url(../assets/images/check-white.svg);
+		background-image: url(../../assets/images/check-white.svg);
 	}
 
 	.main-checkbox:hover > span::before {
-		background-image: url(../assets/images/check-gray.svg);
+		background-image: url(../../assets/images/check-gray.svg);
 	}
 
 	.main-checkbox input {

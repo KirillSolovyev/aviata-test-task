@@ -54,14 +54,14 @@
 		height: 100%;
 		position: relative;
 		background-color: transparent;
-		background-image: url(../assets/images/clear-filter.svg);
+		background-image: url(../../assets/images/clear-filter.svg);
 		background-size: 18px auto;
 		background-repeat: no-repeat;
 		background-position: 50% 50%;
 	}
 
 	.clear-filter:hover button{
-		background-image: url(../assets/images/clear-filter-active.svg);
+		background-image: url(../../assets/images/clear-filter-active.svg);
 	}
 
 	.clear-filter span{
